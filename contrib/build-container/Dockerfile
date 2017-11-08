@@ -51,9 +51,12 @@ RUN git clone --recursive https://github.com/raburton/esptool2 /home/builder/esp
 ENV PATH /home/builder/esptool2:$PATH
 
 # Install sming
+ENV GIT_COMMITTER_NAME "dummy"
+ENV GIT_COMMITTER_EMAIL "dummy@example.com"
 RUN git clone https://github.com/SmingHub/Sming.git /home/builder/Sming \
     && cd /home/builder/Sming \
-    && git reset --hard 93340e19a1e1e68885a36976113bc400eb2be985 \
+    && git checkout 3.4.0 \
+    && git cherry-pick 89ac9a7eef61d8756dd82bb74b451951f2cfa000 \
     && cd /home/builder/Sming/Sming; make clean; make
 
 ENV COM_PORT /dev/ttyESP
